@@ -7,9 +7,6 @@ from adafruit_servokit import ServoKit
 import board
 import busio
 import time
-import rospy
-
-from sensor_msgs.msg import Joy
 
 
 
@@ -26,7 +23,7 @@ def joy_callback(joy_msg):
     global kit
     ax_val_left = joy_msg.axes[1]
     ax_val_right = joy_msg.axes[4]
-    kit.servo[0].angle = ax_val_left * 90 + 90
+    kit.servo[0].angle = ax_val_left * 5
     
     print("Right: {}, Left: {}".format(ax_val_right, ax_val_left))
 
@@ -36,22 +33,42 @@ def joy_to_pwm():
     rospy.init_node("joy_to_pwm", anonymous=True)
     sub = rospy.Subscriber("/joy", Joy, joy_callback, queue_size=1)
     
-    rospy.spin()
-
-
-    
+    rospy.spin()   
 
     
 if __name__ == "__main__":
 
     print("Initializing Servos")
     i2c_bus0=(busio.I2C(board.SCL_1, board.SDA_1))
+    #i2c_bus0=(busio.I2C(board.SCL, board.SDA))
+    
     print("Initializing ServoKit")
     kit = ServoKit(channels=16, i2c=i2c_bus0)
-    # kit[0] is the bottom servo
-    # kit[1] is the top servo
-    print("Done initializing")
-    joy_to_pwm()
+    #kit.continuous_servo[0].set_pulse_width_range(1100, 1900)
+    kit.servo[0].set_pulse_width_range(1100, 1900)
+    
+    print("Waiting for 1, should initialize")
+    kit.servo[0].angle = 90
+    time.sleep(5.0)
+    #for i in range(10):
+        #kit.servo[0].angle = 90    
+        #kit.continuous_servo[0].throttle = 0
+        #time.sleep(0.2)
+
+    print("Done initializing, setting a command")
+    #for i in range(10):
+    #    kit.servo[0].angle = 120
+   #     #kit.continuous_servo[0].throttle = 0.2
+  #      time.sleep(.50)
+    kit.servo[0].angle = 145
+    time.sleep(4.0)
+
+    kit.servo[0].angle = 90
+    time.sleep(1.0)
+
+
+
+#    joy_to_pwm()
    # kit.servo[0].angle = 137
 
 

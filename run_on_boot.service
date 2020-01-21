@@ -1,0 +1,12 @@
+[Unit]
+Description=Run on Boot
+
+[Service]
+User=marv
+Type=forking
+Environment=
+ExecStartPre=
+ExecStart=/bin/bash /home/marv/marv_ros_ws/src/marv_drivers/run_on_boot.sh
+
+[Install]
+WantedBy=multi-user.target
