@@ -6,6 +6,7 @@ User=marv
 Type=forking
 Environment=
 ExecStartPre=
+TimeoutSec=0
 ExecStart=/bin/bash /home/marv/marv_ros_ws/src/marv_drivers/run_on_boot.sh
 
 [Install]

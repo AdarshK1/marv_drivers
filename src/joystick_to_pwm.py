@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # SDA = pin.SDA_1
 # SCL = pin.SCL_1
 # SDA_1 = pin.SDA
