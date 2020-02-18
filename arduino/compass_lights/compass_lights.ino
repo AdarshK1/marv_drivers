@@ -83,28 +83,29 @@ void setup()
 #endif
   // END of Trinket-specific code.
 
-  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
-  strip.show();            // Turn OFF all pixels ASAP
-  strip.setBrightness(250); // Set BRIGHTNESS to about 1/5 (max = 255)
+//  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+//  strip.show();            // Turn OFF all pixels ASAP
+//  strip.setBrightness(250); // Set BRIGHTNESS to about 1/5 (max = 255)
 }
 
 void loop()
 {
   // Read, calculate, and print the heading, pitch, and roll from the sensor
   compass.readHeading();
-  printHeadingData();
-  
+//  printHeadingData();
   // Read, calculate, and print the acceleration on the x, y, and z axis of the sensor
   compass.readAccel();
+
+  printAllData();
 //  printAccelData();
   
   // Wait for two seconds
   delay(200); // Minimum delay of 200ms (HMC6343 has 5Hz sensor reads/calculations)
 
     // Fill along the length of the strip in various colors...
-  colorWipe(strip.Color(255,   0,   0), 10); // Red
-  colorWipe(strip.Color(  0, 255,   0), 10); // Green
-  colorWipe(strip.Color(  0,   0, 255), 10); // Blue
+//  colorWipe(strip.Color(255,   0,   0), 10); // Red
+//  colorWipe(strip.Color(  0, 255,   0), 10); // Green
+//  colorWipe(strip.Color(  0,   0, 255), 10); // Blue
 //
 //  // Do a theater marquee effect in various colors...
 //  theaterChase(strip.Color(127, 127, 127), 50); // White, half brightness
@@ -113,6 +114,19 @@ void loop()
 //
 //  rainbow(10);             // Flowing rainbow cycle along the whole strip
 //  theaterChaseRainbow(50); // Rainbow-enhanced theaterChase variant
+}
+
+void  printAllData()
+{
+  Serial.print("YPR,XYZ: ");
+  Serial.print((float) compass.heading/10.0); Serial.print(",");  
+  Serial.print((float) compass.pitch/10.0); Serial.print(",");  
+  Serial.print((float) compass.roll/10.0); Serial.print(",");
+  Serial.print((float) compass.accelX/1024.0);Serial.print(","); 
+  Serial.print((float) compass.accelY/1024.0);Serial.print(",");
+  Serial.print((float) compass.accelZ/1024.0);Serial.println(",");
+
+
 }
 
 // Print both the raw values of the compass heading, pitch, and roll
@@ -125,12 +139,12 @@ void loop()
 void printHeadingData()
 {
   Serial.println("Heading Data (in degrees):");
-  Serial.print("Heading: ");
-  Serial.print((float) compass.heading/10.0);Serial.println(); // Print heading in degrees
-  Serial.print("Pitch: ");
-  Serial.print((float) compass.pitch/10.0);Serial.println();
-  Serial.print("Roll: ");
-  Serial.print((float) compass.roll/10.0);Serial.println();
+//  Serial.print("Heading: ");
+  Serial.print((float) compass.heading/10.0);Serial.print(" ");  //Serial.println(); // Print heading in degrees
+//  Serial.print("Pitch: ");
+  Serial.print((float) compass.pitch/10.0);Serial.print(" ");  //Serial.println();
+//  Serial.print("Roll: ");
+  Serial.print((float) compass.roll/10.0);Serial.print(" "); //Serial.println();
   Serial.println();
 }
 
@@ -145,13 +159,13 @@ void printAccelData()
 {
   Serial.println("Accelerometer Data (Raw value, in g forces):");
   Serial.print("X: ");
-  Serial.print(compass.accelX); Serial.print("  "); // Print raw acceleration measurement on x axis
+//  Serial.print(compass.accelX); Serial.print("  "); // Print raw acceleration measurement on x axis
   Serial.print((float) compass.accelX/1024.0);Serial.println("g"); // Print x axis acceleration measurement in g forces
   Serial.print("Y: ");
-  Serial.print(compass.accelY); Serial.print("  ");
+//  Serial.print(compass.accelY); Serial.print("  ");
   Serial.print((float) compass.accelY/1024.0);Serial.println("g");
   Serial.print("Z: ");
-  Serial.print(compass.accelZ); Serial.print("  ");
+//  Serial.print(compass.accelZ); Serial.print("  ");
   Serial.print((float) compass.accelZ/1024.0);Serial.println("g");
   Serial.println();
 }

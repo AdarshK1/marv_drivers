@@ -13,9 +13,10 @@ void loop() {
 
 //  char inByte = ' ';
 //  if(Serial.available()){ // only send data back if data has been sent
-  char inByte = Serial.read(); // read the incoming data
-  Serial.print("from arduino   ");
-  Serial.println(inByte); // send the data back in a new line so that it is not all one long line
+//  char inByte = Serial.read(); // read the incoming data
+  Serial.print("from arduino test");
+//  Serial.print(inByte); // send the data back in a new line so that it is not all one long line
+  Serial.println();
 //  }
 
   delay(500);
