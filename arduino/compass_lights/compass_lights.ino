@@ -47,7 +47,7 @@ SFE_HMC6343 compass; // Declare the sensor object
 #define LED_PIN    6
 
 // How many NeoPixels are attached to the Arduino?
-#define LED_COUNT 90
+#define LED_COUNT 9
 
 // Declare our NeoPixel strip object:
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
@@ -60,6 +60,15 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 
+
+int cell1 = A0;
+int cell2 = A1;
+int cell3 = A2;
+int cell4 = A3;
+
+double R2 = 1.32;
+double R3 = 1.88;
+double R4 = 2.82;
 
 
 void setup()
@@ -101,6 +110,20 @@ void loop()
   
   // Wait for two seconds
   delay(200); // Minimum delay of 200ms (HMC6343 has 5Hz sensor reads/calculations)
+
+  double cell_1_ADC = analogRead(cell1) * 5.0/1024;
+  double cell_2_ADC = analogRead(cell2) * 5.0/1024;
+  double cell_3_ADC = analogRead(cell3) * 5.0/1024;
+  double cell_4_ADC = analogRead(cell4) * 5.0/1024;
+
+  double cell_1 = cell_1_ADC;
+  double cell_2 = cell_2_ADC / (470.0/(470+620));
+  double cell_3 = cell_3_ADC / (330.0/(330+620));
+  double cell_4 = cell_4_ADC / (220.0/(220+620));
+
+  Serial.print("Cell 1 Voltage: "); Serial.print(cell_1); Serial.print(" Cell 2 Voltage: "); Serial.println(cell_2);
+  Serial.print("Cell 3 Voltage: "); Serial.print(cell_3); Serial.print(" Cell 4 Voltage: "); Serial.println(cell_4);
+  Serial.println("......................................................");
 
     // Fill along the length of the strip in various colors...
 //  colorWipe(strip.Color(255,   0,   0), 10); // Red
