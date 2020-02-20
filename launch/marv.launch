@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
-   <node name="joy_node" pkg="joy" type="joy_node">
+    <arg name="use_rosbag" default="false"/>
+
+    <!-- Joystick Driver -->	
+    <node name="joy_node" pkg="joy" type="joy_node">
         <param name="autorepeat_rate" value="10"/>
-   </node>
+    </node>
 
+   <!-- Realsense Camera Driver -->
    <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
-
    <node name="rs_throttler" type="throttle" pkg="topic_tools" args="messages /camera/fisheye1/image_raw 5"/>
 
+   <!-- ROS Bagging -->
+   <group if="$(arg use_rosbag)">
    <node pkg="rosbag" type="record" name="rosbag_record_cam" args="record -o /home/marv/rosbags/rosbag_data_ 
 	   /camera/odom/sample
 	   /camera/fisheye1/image_raw_throttle
 	   /sent_command
 	   /joy
 	   /camera" />
+   </group>
 </launch>
