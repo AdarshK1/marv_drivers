@@ -17,10 +17,6 @@ import rospy
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import TwistStamped
 
-
-# from approxeng.input.selectbinder import ControllerResource
-
-
 # On the Jetson Nano
 # Bus 0 (pins 28,27) is board SCL_1, SDA_1 in the jetson board definition file
 # Bus 1 (pins 5, 3) is board SCL, SDA in the jetson definition file
