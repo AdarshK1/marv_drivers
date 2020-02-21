@@ -51,7 +51,7 @@ class JoyToPWM:
         self.thruster_cmd_sub = rospy.Subscriber("/thruster_command/cmd_vel", TwistStamped,
                                                  self.thruster_cmd_cb, queue_size=1)
 
-        self.state_sub = rospy.Subscriber("", Float32MultiArray, self.state_cb, queue_size=1)
+        self.state_sub = rospy.Subscriber("/mission_manager/state", Float32MultiArray, self.state_cb, queue_size=1)
 
         self.initialize_thrusters()
 
